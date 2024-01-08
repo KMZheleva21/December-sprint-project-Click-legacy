@@ -2,5 +2,5 @@
 
 app::app()
 {
-
+	loginMenu();
 }
