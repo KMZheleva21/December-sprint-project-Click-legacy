@@ -41,7 +41,7 @@ void login(std::fstream& loginFile)
 	std::string inputLine;
 
 	std::cout << "Enter username: ";
-	getline(std::cin, loginUsername);
+	std::cin >> loginUsername;
 	std::cin.ignore();
 	std::cout << std::endl;
 	std::cout << "Enter password: ";
