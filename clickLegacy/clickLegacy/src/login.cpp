@@ -66,7 +66,7 @@ void login(std::fstream& loginFile)
 	}
 	else
 	{
-		std::cout << "No account with said account details detected. Please check for any mistakes and try again!";
+		std::cout << "No account with said account details detected" << std::endl;
 	}
 }
 
