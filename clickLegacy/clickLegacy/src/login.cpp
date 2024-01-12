@@ -38,6 +38,7 @@ void login(std::fstream& loginFile)
 	std::string loginUsername;
 	std::string loginPassword;
 	std::string line;
+	std::string inputLine;
 
 	std::cout << "Enter username: ";
 	getline(std::cin, loginUsername);
@@ -48,10 +49,12 @@ void login(std::fstream& loginFile)
 	std::cin.ignore();
 	std::cout << std::endl;
 
+	inputLine = loginUsername + " " + loginPassword;
+
 	while (!loginFile.eof())
 	{
 		getline(loginFile, line);
-		if (line == (loginUsername + " " + loginPassword))
+		if (line == inputLine)
 		{
 			check = true;
 			break;
