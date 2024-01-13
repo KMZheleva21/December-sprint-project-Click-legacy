@@ -2,7 +2,8 @@
 
 app::app()
 {
+	bool* check = new bool;
 	std::string* username = new std::string;
-	loginMenu(username);
-	showPossessions(username);
+	loginMenu(username, check);
+	showPossessions(username, check);
 }

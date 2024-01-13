@@ -1,9 +1,11 @@
 #include "../lib/precompile.hpp"
-void showPossessions(std::string* username) {
-
+void showPossessions(std::string* username, bool* check) {
+	
 	std::string line;
 	std::fstream possessionfile;
-	possessionfile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
+	if (*check) {
+		possessionfile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
+	}
 	while (!possessionfile.eof()) {
 		getline(possessionfile, line);
 		std::cout << line << std::endl;

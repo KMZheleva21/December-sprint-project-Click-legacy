@@ -1,1 +1,2 @@
-void showPossessions(std::string* username);
+void showPossessions(std::string* username, bool* check);
+void addToPossessions();

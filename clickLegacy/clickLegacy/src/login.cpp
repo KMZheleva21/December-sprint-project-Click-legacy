@@ -1,6 +1,6 @@
 #include "../lib/precompile.hpp"
 
-void loginMenu(std::string* username)
+void loginMenu(std::string* username, bool* check)
 {
 	int numOfAction;
 
@@ -22,7 +22,7 @@ void loginMenu(std::string* username)
 	switch (numOfAction)
 	{
 		case 1:
-			login(loginFile, username);
+			login(loginFile, username, check);
 			break;
 		case 2:
 			register1(loginFile);
@@ -32,7 +32,7 @@ void loginMenu(std::string* username)
 	loginFile.close();
 }
 
-void login(std::fstream& loginFile, std::string* username)
+void login(std::fstream& loginFile, std::string* username, bool* check1)
 {
 	bool check = false;
 	std::string loginUsername;
@@ -59,6 +59,7 @@ void login(std::fstream& loginFile, std::string* username)
 			break;
 		}
 	}
+	*check1 = check;
 	if (check)
 	{
 		std::cout << "Login Successful!";
