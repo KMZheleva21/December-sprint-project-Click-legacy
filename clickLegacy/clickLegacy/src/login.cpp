@@ -5,7 +5,7 @@ void loginMenu()
 	int numOfAction;
 
 	std::fstream loginFile;
-	loginFile.open("./files/loginInfo.txt", std::ios::in | std::ios::out);
+	loginFile.open("./files/loginInfo.txt", std::ios::in | std::ios::out | std::ios::app);
 	
 	if (!loginFile)
 	{
@@ -83,5 +83,5 @@ void register1(std::fstream& loginFile)
 	std::cin >> registerPassword;
 	std::cin.ignore();
 
-	loginFile << registerUsername + " " + registerPassword;
+	loginFile << std::endl << registerUsername + " " + registerPassword;
 }
