@@ -2,5 +2,7 @@
 
 app::app()
 {
-	loginMenu();
+	std::string* username = new std::string;
+	loginMenu(username);
+	showPossessions(username);
 }

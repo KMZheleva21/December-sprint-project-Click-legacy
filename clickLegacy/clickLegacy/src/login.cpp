@@ -1,6 +1,6 @@
 #include "../lib/precompile.hpp"
 
-void loginMenu()
+void loginMenu(std::string* username)
 {
 	int numOfAction;
 
@@ -22,7 +22,7 @@ void loginMenu()
 	switch (numOfAction)
 	{
 		case 1:
-			login(loginFile);
+			login(loginFile, username);
 			break;
 		case 2:
 			register1(loginFile);
@@ -32,21 +32,20 @@ void loginMenu()
 	loginFile.close();
 }
 
-void login(std::fstream& loginFile)
+void login(std::fstream& loginFile, std::string* username)
 {
 	bool check = false;
 	std::string loginUsername;
 	std::string loginPassword;
 	std::string line;
 	std::string inputLine;
-
+	
 	std::cout << "Enter username: ";
 	std::cin >> loginUsername;
-	std::cin.ignore();
+	*username = loginUsername;
 	std::cout << std::endl;
 	std::cout << "Enter password: ";
 	std::cin >> loginPassword;
-	std::cin.ignore();
 	std::cout << std::endl;
 
 	inputLine = loginUsername + " " + loginPassword;
@@ -72,16 +71,14 @@ void login(std::fstream& loginFile)
 
 void register1(std::fstream& loginFile)
 {
+	std::fstream possessionfile;
 	std::string registerUsername;
 	std::string registerPassword;
 
 	std::cout << "Please enter a Username: ";
 	std::cin >> registerUsername;
-	std::cin.ignore();
 	std::cout << std::endl;
 	std::cout << "Please enter a Password: ";
 	std::cin >> registerPassword;
-	std::cin.ignore();
-
 	loginFile << std::endl << registerUsername + " " + registerPassword;
 }

@@ -22,10 +22,12 @@
     <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\clickLegacy.cpp" />
     <ClCompile Include="src\login.cpp" />
+    <ClCompile Include="src\possessions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\app.hpp" />
     <ClInclude Include="lib\login.hpp" />
+    <ClInclude Include="lib\possessions.hpp" />
     <ClInclude Include="lib\precompile.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
