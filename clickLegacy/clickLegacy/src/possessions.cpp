@@ -7,9 +7,10 @@ void possessionsMenu(std::string* username, bool* check)
 		possessionFile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
 	}
 
-	int action;
+	
 	while (true)
 	{
+		int action;
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "[1] Show your current possessions" << std::endl;
 		std::cout << "[2] Add to your possessions" << std::endl << std::endl;
@@ -26,6 +27,9 @@ void possessionsMenu(std::string* username, bool* check)
 			addToPossessions(possessionFile);
 			system("cls");
 			break;
+		default:
+			std::cout << "You entered a wrong action. Try again" << std::endl;
+			system("cls");
 		}
 	}
 	possessionFile.close();
@@ -40,6 +44,30 @@ void showPossessions(std::fstream& possessionFile) {
 	}
 }
 
+void enterCardInformation() {
+	std::string cardNumber;
+	std::string date;
+	std::string cvv;
+	std::cout << "Enter card number:" << std::endl;
+	std::cin >> cardNumber;
+	std::cout << "Enter your card validity: (MM/YY)" << std::endl;
+	std::cin >> date;
+	std::cout << "Enter your CVV/CVC (Card Verification Value/Code):" << std::endl;
+	std::cin >> cvv;
+	std::cout << "Authorization..." << std::endl;
+	Sleep(3000);
+	std::cout << "Card successfully added" << std::endl;
+}
+
+void enterE_WalletInformation() {
+	std::string accountNumber;
+	std::cout << "Enter wallet account No. :" << std::endl;
+	std::cin >> accountNumber;
+	std::cout << "Authorization..." << std::endl;
+	Sleep(3000);
+	std::cout << "Successfully added" << std::endl;
+}
+
 void addToPossessions(std::fstream& possessionFile) {
 	std::string addPossessions;
 	std::string type;
@@ -52,6 +80,12 @@ void addToPossessions(std::fstream& possessionFile) {
 		std::cout << "[3] ETH" << std::endl;
 		std::cout << "Select what type of funds you would like to add: ";
 		std::cin >> type;
+		switch (stoi(type)){
+		case 1:
+			enterCardInformation();
+		case 2:
+			enterE_WalletInformation();
+		}
 		std::cout << std::endl;
 		std::cout << "Input the amount you would like to add: ";
 		std::cin >> addPossessions;
