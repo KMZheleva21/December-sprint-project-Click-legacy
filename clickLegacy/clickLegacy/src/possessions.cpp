@@ -71,7 +71,6 @@ void enterE_WalletInformation() {
 void addToPossessions(std::fstream& possessionFile) {
 	std::string addPossessions;
 	std::string type;
-	std::string currentLineContents;
 	while (true) {
 		std::cout << "To stop adding, write 'stop' on either on of the spaces" << std::endl;
 		std::cout << "Types of possessions you can add:" << std::endl;
@@ -80,12 +79,13 @@ void addToPossessions(std::fstream& possessionFile) {
 		std::cout << "[3] ETH" << std::endl;
 		std::cout << "Select what type of funds you would like to add: ";
 		std::cin >> type;
-		switch (stoi(type)){
+		/*switch (stoi(type)){
 		case 1:
 			enterCardInformation();
-		case 2:
+			break;
+		case 2: case 3:
 			enterE_WalletInformation();
-		}
+		}*/
 		std::cout << std::endl;
 		std::cout << "Input the amount you would like to add: ";
 		std::cin >> addPossessions;
@@ -94,17 +94,25 @@ void addToPossessions(std::fstream& possessionFile) {
 		}
 		else {
 			int lineCounter = 1;
-			while (true)
+			std::fstream file;
+			file.open("./files/temp.txt", std::ios::in | std::ios::out);
+			while (!possessionFile.eof())
 			{
+				std::string line;
+				getline(possessionFile, line);
 				if (lineCounter == stoi(type))
 				{
-					possessionFile >> currentLineContents;
-					currentLineContents = std::to_string(stof(currentLineContents) + stof(addPossessions));
-					possessionFile << currentLineContents;
-					break;
+					line = std::to_string(stoi(line) + stoi(addPossessions));
+					file << line << std::endl;
+				}
+				else
+				{
+					file << line << std::endl;
 				}
 				lineCounter++;
 			}
+			std::swap(possessionFile, file);
+			file.close();
 			system("cls");
 		}
 	}
