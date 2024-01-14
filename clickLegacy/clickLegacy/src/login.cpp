@@ -23,8 +23,17 @@ void loginMenu(std::string* username, bool* check)
 		std::cout << "Error openinng accounts file";
 		return;
 	}
-
 	SetConsoleTextAttribute(console_txt, color_list.blue);
+	
+	std::cout << "  /$$$$$$  /$$       /$$$$$$  /$$$$$$  /$$   /$$       /$$       /$$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$  /$$     /$$ " << std::endl;
+	std::cout << " /$$__  $$| $$      |_  $$_/ /$$__  $$| $$  /$$/      | $$      | $$_____/ /$$__  $$ /$$__  $$ /$$__  $$|  $$   /$$/ " << std::endl;
+	std::cout << "| $$  |__/| $$        | $$  | $$  |__/| $$ /$$/       | $$      | $$      | $$  |__/| $$  | $$| $$  |__/ |  $$ /$$/  " << std::endl;
+	std::cout << "| $$      | $$        | $$  | $$      | $$$$$/        | $$      | $$$$$   | $$ /$$$$| $$$$$$$$| $$        |  $$$$/   " << std::endl;
+	std::cout << "| $$      | $$        | $$  | $$      | $$  $$        | $$      | $$__/   | $$|_  $$| $$__  $$| $$         |  $$/    " << std::endl;
+	std::cout << "| $$    $$| $$        | $$  | $$    $$| $$|  $$       | $$      | $$      | $$  | $$| $$  | $$| $$    $$    | $$     " << std::endl;
+	std::cout << "|  $$$$$$/| $$$$$$$$ /$$$$$$|  $$$$$$/| $$ |  $$      | $$$$$$$$| $$$$$$$$|  $$$$$$/| $$  | $$|  $$$$$$/    | $$     " << std::endl;
+	std::cout << " |______/ |________/|______/ |______/ |__/  |__/      |________/|________/ |______/ |__/  |__/ |______/     |__/     " << std::endl;
+	std::cout << std::endl;
 	std::cout << "Enter the number of the action you want to select:" << std::endl;
 	std::cout << "[1] Login" << std::endl;
 	std::cout << "[2] Register" << std::endl;
@@ -53,6 +62,8 @@ void login(std::fstream& loginFile, std::string* username, bool* check1)
 	std::string inputLine;
 
 	system("cls");
+
+
 	std::cout << "Enter username: ";
 	SetConsoleTextAttribute(console_txt, color_list.white);
 	std::cin >> loginUsername;
