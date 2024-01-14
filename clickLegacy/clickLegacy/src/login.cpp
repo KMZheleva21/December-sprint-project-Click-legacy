@@ -51,6 +51,7 @@ void login(std::fstream& loginFile, std::string* username, bool* check1)
 	std::string line;
 	std::string inputLine;
 
+	system("cls");
 	std::cout << "Enter username: ";
 	SetConsoleTextAttribute(console_txt, color_list.white);
 	std::cin >> loginUsername;
@@ -92,6 +93,7 @@ void register1(std::fstream& loginFile)
 	std::string registerUsername;
 	std::string registerPassword;
 
+	system("cls");
 	std::cout << "Please enter a Username: ";
 	std::cin >> registerUsername;
 	std::cout << std::endl;
