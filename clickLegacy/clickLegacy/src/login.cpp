@@ -1,6 +1,7 @@
 #include "../lib/precompile.hpp"
 
 HANDLE console_txt = GetStdHandle(STD_OUTPUT_HANDLE);
+
 struct COLOR {
 	int white = 15;
 	int green = 10;
@@ -25,8 +26,8 @@ void loginMenu(std::string* username, bool* check)
 
 	SetConsoleTextAttribute(console_txt, color_list.blue);
 	std::cout << "Enter the number of the action you want to select:" << std::endl;
-	std::cout << "1.Login" << std::endl;
-	std::cout << "2.Register" << std::endl;
+	std::cout << "[1] Login" << std::endl;
+	std::cout << "[2] Register" << std::endl;
 	std::cin >> numOfAction;
 	std::cout << std::endl;
 

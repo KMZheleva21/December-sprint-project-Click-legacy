@@ -1,9 +1,9 @@
 #include "../lib/precompile.hpp"
 
-app::app()
+void app()
 {
 	bool* check = new bool;
 	std::string* username = new std::string;
 	loginMenu(username, check);
-	showPossessions(username, check);
+	possessionsMenu(username, check);
 }
