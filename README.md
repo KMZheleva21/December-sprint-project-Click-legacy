@@ -37,9 +37,9 @@
 
  <h1>📋 Documents</h1>
 <p>
-<h2> <a href ="Documents/Project documentation" >📜 Documentation</h2>
-<h2> <a href ="Documents/Project documentation" >📰 Presentation</h2>
-<h2> <a href ="Documents/QA_click_legacy">🔍 QA Tests</h2>
+<h2> <a href ="../Documents/Project documentation" >📜 Documentation</h2>
+<h2> <a href ="../Documents/Project documentation" >📰 Presentation</h2>
+<h2> <a href ="../Documents/QA_click_legacy">🔍 QA Tests</h2>
   
   </p>
 </p>
