@@ -37,7 +37,7 @@ void loginMenu(std::string* username, bool* check)
 			login(loginFile, username, check);
 			break;
 		case 2:
-			register1(loginFile);
+			register1(loginFile, username, check);
 			break;
 	}
 
@@ -83,22 +83,96 @@ void login(std::fstream& loginFile, std::string* username, bool* check1)
 	}
 	else
 	{
+		std::string answer;
 		SetConsoleTextAttribute(console_txt, color_list.red);
-		std::cout << "No account with said account details detected" << std::endl;
+		std::cout << "No account with said account details detected. Would you like to register? (Yes/No)" << std::endl;
+		std::cin >> answer;
 	}
 }
 
-void register1(std::fstream& loginFile)
+void register1(std::fstream& loginFile, std::string* username, bool* check)
 {
-	std::fstream possessionfile;
 	std::string registerUsername;
 	std::string registerPassword;
 
 	system("cls");
-	std::cout << "Please enter a Username: ";
+	std::cout << "Please enter a Username: " << std::endl;
+	std::cout << "[*]The username must not contain any spaces or special characters" << std::endl;
 	std::cin >> registerUsername;
 	std::cout << std::endl;
-	std::cout << "Please enter a Password: ";
-	std::cin >> registerPassword;
-	loginFile << std::endl << registerUsername + " " + registerPassword;
+	while (true)
+	{
+		std::cout << "Please enter a Password: " << std::endl;
+		std::cout << "[*] The password must be between 6 and 16 characters long." << std::endl;
+		std::cout << "[*] The password must not contain any spaces." << std::endl;
+		std::cout << "[*] The password must have at least 1 upper-case character" << std::endl;
+		std::cout << "[*] The password must have at least 1 special character" << std::endl;
+		std::cout << "[*] The password must have at least 1 number" << std::endl;
+		std::cin >> registerPassword;
+		if (checkPassword(registerPassword))
+		{
+			break;
+		}
+		else
+		{
+			std::cout << "Your password doesn't meet the requirements. Please try again!";
+			Sleep(3000);
+			system("cls");
+		}
+	}
+	bool checkFind = false;
+	while (loginFile.eof())
+	{
+		std::string line;
+		getline(loginFile, line);
+		if(line.find(registerUsername))
+		{
+			checkFind = true;
+			break;
+		}
+
+	}
+	if (!checkFind)
+	{
+		loginFile << std::endl << registerUsername + " " + registerPassword;
+	}
+	else
+	{
+		std::string answer;
+		std::cout << std::endl << "An account with said username already exists. Would you like to log-in into this account? (Yes/No)" << std::endl;
+		std::cin >> answer;
+		if (answer == "Yes")
+		{
+			login(loginFile, username, check);
+		}
+		else
+		{
+			return;
+		}
+	}
+}
+
+bool checkPassword(std::string password)
+{
+	bool checkSize = false;
+	bool checkSpaces = false;
+	bool checkUpper = false;
+	bool checkSpecial = false;
+	bool checkNumber = false;
+
+	if (password.size() >= 6 && password.size() <= 16) checkSize = true;
+
+	if (password.find(' ')) checkSpaces = true;
+
+	for (int i = 0; i < password.size(); i++)
+	{
+		if (password[i] >= 65 && password[i] <= 90) checkUpper = true;
+		if (password[i] >= 48 && password[i] <= 57) checkNumber = true;
+		if (!(password[i] >= 65 && password[i] <= 90) && !(password[i] >= 48 && password[i] <= 57) && !(password[i] >= 97 && password[i] <= 122)) checkSpecial = true;
+	}
+
+	if (checkSize && checkUpper && checkNumber && checkSpecial && !checkSpaces)
+		return true;
+	else
+		return false;
 }
