@@ -1,5 +1,14 @@
 #include "../lib/precompile.hpp"
 
+HANDLE console_txt = GetStdHandle(STD_OUTPUT_HANDLE);
+struct COLOR {
+	int white = 15;
+	int green = 10;
+	int red = 12;
+	int blue = 9;
+};
+COLOR color_list;
+
 void loginMenu(std::string* username, bool* check)
 {
 	int numOfAction;
@@ -9,10 +18,12 @@ void loginMenu(std::string* username, bool* check)
 	
 	if (!loginFile)
 	{
+		SetConsoleTextAttribute(console_txt, color_list.red);
 		std::cout << "Error openinng accounts file";
 		return;
 	}
 
+	SetConsoleTextAttribute(console_txt, color_list.blue);
 	std::cout << "Enter the number of the action you want to select:" << std::endl;
 	std::cout << "1.Login" << std::endl;
 	std::cout << "2.Register" << std::endl;
@@ -39,12 +50,15 @@ void login(std::fstream& loginFile, std::string* username, bool* check1)
 	std::string loginPassword;
 	std::string line;
 	std::string inputLine;
-	
+
 	std::cout << "Enter username: ";
+	SetConsoleTextAttribute(console_txt, color_list.white);
 	std::cin >> loginUsername;
 	*username = loginUsername;
 	std::cout << std::endl;
+	SetConsoleTextAttribute(console_txt, color_list.blue);
 	std::cout << "Enter password: ";
+	SetConsoleTextAttribute(console_txt, color_list.white);
 	std::cin >> loginPassword;
 	std::cout << std::endl;
 
@@ -62,10 +76,12 @@ void login(std::fstream& loginFile, std::string* username, bool* check1)
 	*check1 = check;
 	if (check)
 	{
+		SetConsoleTextAttribute(console_txt, color_list.green);
 		std::cout << "Login Successful!";
 	}
 	else
 	{
+		SetConsoleTextAttribute(console_txt, color_list.red);
 		std::cout << "No account with said account details detected" << std::endl;
 	}
 }
