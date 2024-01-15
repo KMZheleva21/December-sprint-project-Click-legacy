@@ -10,7 +10,7 @@ struct COLOR {
 };
 COLOR color_list;
 
-void loginMenu(std::string* username, bool* check)
+void loginMenu(std::string* username, bool* check, bool* checkClose)
 {
 	int numOfAction;
 
@@ -43,17 +43,17 @@ void loginMenu(std::string* username, bool* check)
 	switch (numOfAction)
 	{
 		case 1:
-			login(loginFile, username, check);
+			login(loginFile, username, check, checkClose);
 			break;
 		case 2:
-			register1(loginFile, username, check);
+			register1(loginFile, username, check, checkClose);
 			break;
 	}
 
 	loginFile.close();
 }
 
-void login(std::fstream& loginFile, std::string* username, bool* check1)
+void login(std::fstream& loginFile, std::string* username, bool* check1, bool* checkClose)
 {
 	bool check = false;
 	std::string loginUsername;
@@ -98,10 +98,18 @@ void login(std::fstream& loginFile, std::string* username, bool* check1)
 		SetConsoleTextAttribute(console_txt, color_list.red);
 		std::cout << "No account with said account details detected. Would you like to register? (Yes/No)" << std::endl;
 		std::cin >> answer;
+		if (answer == "Yes")
+		{
+			register1(loginFile, username, check1, checkClose);
+		}
+		else
+		{
+			*checkClose = true;
+		}
 	}
 }
 
-void register1(std::fstream& loginFile, std::string* username, bool* check)
+void register1(std::fstream& loginFile, std::string* username, bool* check, bool* checkClose)
 {
 	std::string registerUsername;
 	std::string registerPassword;
@@ -132,7 +140,7 @@ void register1(std::fstream& loginFile, std::string* username, bool* check)
 		}
 	}
 	bool checkFind = false;
-	while (loginFile.eof())
+	while (!loginFile.eof())
 	{
 		std::string line;
 		getline(loginFile, line);
@@ -154,10 +162,11 @@ void register1(std::fstream& loginFile, std::string* username, bool* check)
 		std::cin >> answer;
 		if (answer == "Yes")
 		{
-			login(loginFile, username, check);
+			login(loginFile, username, check, checkClose);
 		}
 		else
 		{
+			*checkClose = true;
 			return;
 		}
 	}
@@ -173,7 +182,7 @@ bool checkPassword(std::string password)
 
 	if (password.size() >= 6 && password.size() <= 16) checkSize = true;
 
-	if (password.find(' ')) checkSpaces = true;
+	if (password.find(' ') != std::string::npos) checkSpaces = true;
 
 	for (int i = 0; i < password.size(); i++)
 	{
