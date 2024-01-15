@@ -6,6 +6,8 @@ void showPossessions(std::fstream& possessionsFile);
 
 void addToPossessions(std::fstream& possessionFile);
 
+void transferPossessions(std::fstream& possessionFile);
+
 void enterCardInformation();
 
 void enterE_WalletInformation();
