@@ -22,6 +22,14 @@ void possessionsMenu(std::string* username, bool* check)
 		case 1:
 			showPossessions(possessionFile);
 			std::cout << std::endl << std::endl;
+			std::cout << "Enter '1' to close menu:" << std::endl;
+			std::cin >> action;
+			while (action != 1)
+			{
+				std::cout << "You entered a wrong action. Try again" << std::endl;
+				std::cin >> action;
+			}
+			system("cls");
 			break;
 		case 2:
 			addToPossessions(possessionFile);
@@ -79,20 +87,13 @@ void addToPossessions(std::fstream& possessionFile) {
 		std::cout << "[3] ETH" << std::endl;
 		std::cout << "Select what type of funds you would like to add: ";
 		std::cin >> type;
-		/*switch (stoi(type)){
-		case 1:
-			enterCardInformation();
-			break;
-		case 2: case 3:
-			enterE_WalletInformation();
-		}*/
-		std::cout << std::endl;
-		std::cout << "Input the amount you would like to add: ";
-		std::cin >> addPossessions;
-		if (addPossessions == "stop" || type == "stop") {
+		if (type == "stop") {
 			break;
 		}
 		else {
+			std::cout << std::endl;
+			std::cout << "Input the amount you would like to add: ";
+			std::cin >> addPossessions;
 			int lineCounter = 1;
 			std::fstream file;
 			file.open("./files/temp.txt", std::ios::in | std::ios::out);
@@ -115,5 +116,12 @@ void addToPossessions(std::fstream& possessionFile) {
 			file.close();
 			system("cls");
 		}
+		/*switch (stoi(type)){
+		case 1:
+			enterCardInformation();
+			break;
+		case 2: case 3:
+			enterE_WalletInformation();
+		}*/
 	}
 }
