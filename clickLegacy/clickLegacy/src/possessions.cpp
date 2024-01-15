@@ -49,9 +49,17 @@ void possessionsMenu(std::string* username, bool* check)
 void showPossessions(std::fstream& possessionFile) {
 	
 	std::string line;
+	int lineCounter = 1;
 	while (!possessionFile.eof()) {
 		getline(possessionFile, line);
+		switch (lineCounter)
+		{
+		case 1: std::cout << "USD: "; break;
+		case 2: std::cout << "BTC: "; break;
+		case 3: std::cout << "ETH: "; break;
+		}
 		std::cout << line << std::endl;
+		lineCounter++;
 	}
 }
 

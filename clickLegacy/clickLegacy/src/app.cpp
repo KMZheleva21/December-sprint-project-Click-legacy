@@ -7,9 +7,9 @@ void app()
 	*checkClose = false;
 	std::string* username = new std::string;
 	loginMenu(username, check, checkClose);
-	if (checkClose)
+	if (!checkClose)
 		return;
-	possessionsMenu(username, check);
+	else possessionsMenu(username, check);
 	delete checkClose;
 	delete check;
 	delete username;
