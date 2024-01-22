@@ -37,6 +37,8 @@ void loginMenu(std::string* username, bool* check, bool* checkClose)
 	std::cout << "Enter the number of the action you want to select:" << std::endl;
 	std::cout << "[1] Login" << std::endl;
 	std::cout << "[2] Register" << std::endl;
+	std::cout << "[3] Exit" << std::endl;
+
 	std::cin >> numOfAction;
 	std::cout << std::endl;
 
@@ -48,6 +50,8 @@ void loginMenu(std::string* username, bool* check, bool* checkClose)
 		case 2:
 			register1(loginFile, username, check, checkClose);
 			break;
+		case 3:
+			std::exit(0);
 	}
 
 	loginFile.close();
@@ -104,7 +108,8 @@ void login(std::fstream& loginFile, std::string* username, bool* check1, bool* c
 		}
 		else
 		{
-			*checkClose = true;
+			system("cls");
+			loginMenu(username, check1, checkClose);
 		}
 	}
 }

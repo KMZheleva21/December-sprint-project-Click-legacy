@@ -14,7 +14,7 @@ void possessionsMenu(std::string* username, bool* check)
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "[1] Show your current possessions" << std::endl;
 		std::cout << "[2] Add to your possessions" << std::endl;
-		std::cout << "[3} Transfer your possessions" << std::endl << std::endl;
+		std::cout << "[3] Transfer your possessions" << std::endl << std::endl;
 		std::cout << "Enter the number of the action you would like to do: ";
 		std::cin >> action;
 
@@ -125,15 +125,14 @@ void addToPossessions(std::fstream& possessionFile) {
 			}
 			std::swap(possessionFile, file);
 			file.close();
-			system("cls");
 		}
-		/*switch (stoi(type)){
+		switch (stoi(type)){
 		case 1:
 			enterCardInformation();
 			break;
 		case 2: case 3:
 			enterE_WalletInformation();
-		}*/
+		}
 	}
 }
 
