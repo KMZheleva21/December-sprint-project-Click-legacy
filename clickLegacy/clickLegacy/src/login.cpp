@@ -1,7 +1,6 @@
 #include "../lib/precompile.hpp"
 
 HANDLE console_txt = GetStdHandle(STD_OUTPUT_HANDLE);
-
 struct COLOR {
 	int white = 15;
 	int green = 10;

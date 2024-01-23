@@ -10,4 +10,8 @@ void transferPossessions(std::fstream& possessionFile);
 
 void enterCardInformation();
 
+void enterBTCInformation();
+
 void enterE_WalletInformation();
+
+bool checkE_mail(std::string e_mail);

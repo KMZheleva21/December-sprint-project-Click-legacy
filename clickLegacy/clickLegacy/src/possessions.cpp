@@ -1,5 +1,6 @@
 #include "../lib/precompile.hpp"
 
+
 void possessionsMenu(std::string* username, bool* check)
 {
 	std::fstream possessionFile;
@@ -78,6 +79,38 @@ void enterCardInformation() {
 	std::cout << "Card successfully added" << std::endl;
 }
 
+void enterBTCInformation() {
+	std::string e_mailAddress;
+	std::string firstName;
+	std::string lastName;
+	std::string pin;
+	while (true)
+	{
+		std::cout << "Enter your E-mail Address: " << std::endl;
+		std::cin >> e_mailAddress;
+		if (checkE_mail(e_mailAddress))
+		{
+			break;
+		}
+		else
+		{
+			std::cout << "Your E-mail doesn't meet the requirements. Please try again!";
+			Sleep(3000);
+			system("cls");
+		}
+	}
+	std::cout << "Enter your First Name: " << std::endl;
+	std::cin >> firstName;
+	std::cout << "Enter your Last Name: " << std::endl;
+	std::cin >> lastName;
+	std::cout << "Enter your PIN code: " << std::endl;
+	std::cin >> pin;
+	std::cout << "Authorization..." << std::endl;
+	Sleep(3000);
+	std::cout << "Card successfully added" << std::endl;
+}
+
+
 void enterE_WalletInformation() {
 	std::string accountNumber;
 	std::cout << "Enter wallet account No. :" << std::endl;
@@ -130,8 +163,12 @@ void addToPossessions(std::fstream& possessionFile) {
 		case 1:
 			enterCardInformation();
 			break;
-		case 2: case 3:
+		case 2: 
+			enterBTCInformation();
+			break;
+		case 3:
 			enterE_WalletInformation();
+			break;
 		}
 	}
 }
@@ -206,4 +243,23 @@ void transferPossessions(std::fstream& possessionFile)
 		}
 	}
 
+}
+
+bool checkE_mail(std::string e_mail)
+{
+	bool checkSpaces = false;
+	bool checkSpecial = false;
+	bool checkPoint = false;
+
+
+	if (e_mail.find(' ') != std::string::npos) checkSpaces = true;
+
+	if (e_mail.find('@') != std::string::npos) checkSpecial = true;
+
+	if (e_mail.find('.') != std::string::npos) checkPoint = true;
+
+	if (checkSpecial && !checkSpaces && checkPoint)
+		return true;
+	else
+		return false;
 }
