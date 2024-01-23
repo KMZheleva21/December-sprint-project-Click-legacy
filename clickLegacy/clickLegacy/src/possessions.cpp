@@ -34,7 +34,7 @@ void possessionsMenu(std::string* username, bool* check)
 			system("cls");
 			break;
 		case 2:
-			addToPossessions(possessionFile);
+			addToPossessions(possessionFile, username);
 			system("cls");
 			break;
 		case 3:
@@ -120,11 +120,11 @@ void enterE_WalletInformation() {
 	std::cout << "Successfully added" << std::endl;
 }
 
-void addToPossessions(std::fstream& possessionFile) {
+void addToPossessions(std::fstream& possessionFile, std::string* username) {
 	std::string addPossessions;
 	std::string type;
 	while (true) {
-		std::cout << "To stop adding, write 'stop' on either on of the spaces" << std::endl;
+		std::cout << "To stop adding, write 'stop'" << std::endl;
 		std::cout << "Types of possessions you can add:" << std::endl;
 		std::cout << "[1] Money (in USD)" << std::endl;
 		std::cout << "[2] BTC" << std::endl;
@@ -138,26 +138,19 @@ void addToPossessions(std::fstream& possessionFile) {
 			std::cout << std::endl;
 			std::cout << "Input the amount you would like to add: ";
 			std::cin >> addPossessions;
-			int lineCounter = 1;
-			std::fstream file;
-			file.open("./files/temp.txt", std::ios::in | std::ios::out);
-			while (!possessionFile.eof())
+			std::string line;
+			std::vector<std::string> tempHold;
+			while (getline(possessionFile, line))
 			{
-				std::string line;
-				getline(possessionFile, line);
-				if (lineCounter == stoi(type))
-				{
-					line = std::to_string(stoi(line) + stoi(addPossessions));
-					file << line << std::endl;
-				}
-				else
-				{
-					file << line << std::endl;
-				}
-				lineCounter++;
+				tempHold.push_back(line);
 			}
-			std::swap(possessionFile, file);
-			file.close();
+			possessionFile.close();
+			tempHold[stoi(type) - 1] = std::to_string(stoi(tempHold[stoi(type) - 1]) + stoi(addPossessions));
+			possessionFile.open("./files/" + *username + ".txt");
+			for (size_t i = 0; i < tempHold.size(); i++)
+			{
+				possessionFile << tempHold[i] << std::endl;
+			}
 		}
 		switch (stoi(type)){
 		case 1:
