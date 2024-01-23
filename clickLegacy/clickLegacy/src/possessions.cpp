@@ -33,6 +33,7 @@ void possessionsMenu(std::string* username, bool* check)
 			break;
 		case 3:
 			transferPossessions(username, check);
+			break;
 		default:
 			std::cout << "You entered a wrong action. Try again" << std::endl;
 			system("cls");
@@ -170,78 +171,92 @@ void addToPossessions(std::string* username, bool* check) {
 
 void transferPossessions(std::string* username, bool* check)
 {
-	std::fstream possessionFile;
+	std::fstream possessionFileSend;
+	std::string receiveUsername;
 	if (*check) {
-		possessionFile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
+		possessionFileSend.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
 	}
-	system("cls");
-	std::fstream user_list;
-	user_list.open("./files/loginInfo.txt");
+	std::cout << "Enter the person that you want to transfer to's username: ";
+	std::cin >> receiveUsername;
+	std::cout << std::endl;
+	std::fstream loginFile;
 	std::string line;
-	std::string rec_username;
-	std::string type;
-	std::string addPossessions;
-	bool check1 = false;
-	std::cout << "Enter recipient's username:" << std::endl << std::endl;
-	std::cin >> rec_username;
-	while (!user_list.eof())
+	loginFile.open("./files/loginInfo.txt");
+	bool usernameCheck = false;
+	while (getline(loginFile, line))
 	{
-		getline(user_list, line);
-		if (line.find(rec_username) != std::string::npos)
+		if (line.find(receiveUsername) != std::string::npos)
 		{
-			check1 = true;
+			usernameCheck = true;
 			break;
 		}
 	}
-	while (check1)
+	loginFile.close();
+	if (usernameCheck)
 	{
-		if (check1)
+		std::fstream possessionFileReceive;
+		possessionFileReceive.open("./files" + receiveUsername + ".txt");
+		std::cout << "Types of possessions you can trannsfer:" << std::endl;
+		std::cout << "[1] Money (in USD)" << std::endl;
+		std::cout << "[2] BTC" << std::endl;
+		std::cout << "[3] ETH" << std::endl;
+		std::cout << "Select what type of funds you would like to transfer to " << receiveUsername << ": ";
+		int type;
+		int amount;
+		std::cin >> type;
+		std::cout << "Input the amount you would like to transfer: ";
+		std::cin >> amount;
+		int counter = 1;
+		bool checkAmount = false;
+		while (getline(possessionFileSend, line))
 		{
-			std::cout << "Types of possessions you can transfer:" << std::endl;
-			std::cout << "[1] Money (in USD)" << std::endl;
-			std::cout << "[2] BTC" << std::endl;
-			std::cout << "[3] ETH" << std::endl;
-			std::cout << "Select what type of funds you would like to transfer: ";
-			std::cin >> type;
-			if (type == "stop") {
+			if (counter == type)
+			{
 				break;
 			}
-			else {
-				possessionFile.close();
-				possessionFile.open("./files/" + rec_username + ".txt", std::ios::in | std::ios::out | std::ios::app);
-				std::cout << std::endl;
-				std::cout << "Input the amount you would like to transfer: ";
-				std::cin >> addPossessions;
-				int lineCounter = 1;
-				std::fstream file;
-				file.open("./files/temp.txt", std::ios::in | std::ios::out);
-				while (!possessionFile.eof())
-				{
-					std::string line;
-					getline(possessionFile, line);
-					if (lineCounter == stoi(type))
-					{
-						line = std::to_string(stoi(line) + stoi(addPossessions));
-						file << line << std::endl;
-					}
-					else
-					{
-						file << line << std::endl;
-					}
-					lineCounter++;
-				}
-				std::swap(possessionFile, file);
-				file.close();
-				system("cls");
-			}
+			counter++;
 		}
-		else {
-			std::cout << "No user with entered username. Please try again!" << std::endl << std::endl;
-			Sleep(3000);
-			transferPossessions(username, check);
+		if (stoi(line) < amount)
+		{
+			std::cout << "You don't have enough funds to transfer.";
+			possessionFileSend.close();
+			possessionFileReceive.close();
+		}
+		else
+		{
+			std::vector<std::string> sendHold;
+			while (getline(possessionFileSend, line))
+			{
+				sendHold.push_back(line);
+			}
+			possessionFileSend.close();
+			sendHold[type - 1] = std::to_string(stoi(sendHold[type - 1]) - amount);
+			possessionFileSend.open("./files/" + *username + ".txt", std::ios::trunc);
+			for (size_t i = 0; i < sendHold.size(); i++)
+			{
+				possessionFileSend << sendHold[i] << std::endl;
+			}
+			possessionFileSend.close();
+			std::vector<std::string> receiveHold;
+			while (getline(possessionFileReceive, line))
+			{
+				receiveHold.push_back(line);
+			}
+			possessionFileReceive.close();
+			receiveHold[type - 1] = std::to_string(stoi(receiveHold[type - 1]) + amount);
+			possessionFileReceive.open("./files/" + receiveUsername + ".txt");
+			for (size_t i = 0; i < receiveHold.size(); i++)
+			{
+				possessionFileReceive << receiveHold[i] << std::endl;
+			}
+			possessionFileReceive.close();
 		}
 	}
-
+	else
+	{
+		std::cout << "Username not found. Please try again!";
+		transferPossessions(username, check);
+	}
 }
 
 bool checkE_mail(std::string e_mail)
