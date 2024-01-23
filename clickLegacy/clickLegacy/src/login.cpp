@@ -24,35 +24,46 @@ void loginMenu(std::string* username, bool* check, bool* checkClose)
 	}
 	SetConsoleTextAttribute(console_txt, color_list.blue);
 	
-	std::cout << "  /$$$$$$  /$$       /$$$$$$  /$$$$$$  /$$   /$$       /$$       /$$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$  /$$     /$$ " << std::endl;
-	std::cout << " /$$__  $$| $$      |_  $$_/ /$$__  $$| $$  /$$/      | $$      | $$_____/ /$$__  $$ /$$__  $$ /$$__  $$|  $$   /$$/ " << std::endl;
-	std::cout << "| $$  |__/| $$        | $$  | $$  |__/| $$ /$$/       | $$      | $$      | $$  |__/| $$  | $$| $$  |__/ |  $$ /$$/  " << std::endl;
-	std::cout << "| $$      | $$        | $$  | $$      | $$$$$/        | $$      | $$$$$   | $$ /$$$$| $$$$$$$$| $$        |  $$$$/   " << std::endl;
-	std::cout << "| $$      | $$        | $$  | $$      | $$  $$        | $$      | $$__/   | $$|_  $$| $$__  $$| $$         |  $$/    " << std::endl;
-	std::cout << "| $$    $$| $$        | $$  | $$    $$| $$|  $$       | $$      | $$      | $$  | $$| $$  | $$| $$    $$    | $$     " << std::endl;
-	std::cout << "|  $$$$$$/| $$$$$$$$ /$$$$$$|  $$$$$$/| $$ |  $$      | $$$$$$$$| $$$$$$$$|  $$$$$$/| $$  | $$|  $$$$$$/    | $$     " << std::endl;
-	std::cout << " |______/ |________/|______/ |______/ |__/  |__/      |________/|________/ |______/ |__/  |__/ |______/     |__/     " << std::endl;
-	std::cout << std::endl;
-	std::cout << "Enter the number of the action you want to select:" << std::endl;
-	std::cout << "[1] Login" << std::endl;
-	std::cout << "[2] Register" << std::endl;
-	std::cout << "[3] Exit" << std::endl;
+	bool checkAction = false;
+	while(!checkAction){
+		std::cout << "  /$$$$$$  /$$       /$$$$$$  /$$$$$$  /$$   /$$       /$$       /$$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$  /$$     /$$ " << std::endl;
+		std::cout << " /$$__  $$| $$      |_  $$_/ /$$__  $$| $$  /$$/      | $$      | $$_____/ /$$__  $$ /$$__  $$ /$$__  $$|  $$   /$$/ " << std::endl;
+		std::cout << "| $$  |__/| $$        | $$  | $$  |__/| $$ /$$/       | $$      | $$      | $$  |__/| $$  | $$| $$  |__/ |  $$ /$$/  " << std::endl;
+		std::cout << "| $$      | $$        | $$  | $$      | $$$$$/        | $$      | $$$$$   | $$ /$$$$| $$$$$$$$| $$        |  $$$$/   " << std::endl;
+		std::cout << "| $$      | $$        | $$  | $$      | $$  $$        | $$      | $$__/   | $$|_  $$| $$__  $$| $$         |  $$/    " << std::endl;
+		std::cout << "| $$    $$| $$        | $$  | $$    $$| $$|  $$       | $$      | $$      | $$  | $$| $$  | $$| $$    $$    | $$     " << std::endl;
+		std::cout << "|  $$$$$$/| $$$$$$$$ /$$$$$$|  $$$$$$/| $$ |  $$      | $$$$$$$$| $$$$$$$$|  $$$$$$/| $$  | $$|  $$$$$$/    | $$     " << std::endl;
+		std::cout << " |______/ |________/|______/ |______/ |__/  |__/      |________/|________/ |______/ |__/  |__/ |______/     |__/     " << std::endl;
+		std::cout << std::endl;
+		std::cout << "Enter the number of the action you want to select:" << std::endl;
+		std::cout << "[1] Login" << std::endl;
+		std::cout << "[2] Register" << std::endl;
+		std::cout << "[3] Exit" << std::endl;
+		std::cin >> numOfAction;
+		std::cout << std::endl;
 
-	std::cin >> numOfAction;
-	std::cout << std::endl;
-
-	switch (numOfAction)
-	{
+		switch (numOfAction)
+		{
 		case 1:
 			login(loginFile, username, check, checkClose);
+			checkAction = true;
 			break;
 		case 2:
 			register1(loginFile, username, check, checkClose);
+			checkAction = true;
 			break;
 		case 3:
 			std::exit(0);
-	}
+			checkAction = true;
+			break;
+		default:
+			std::cout << "You entered the wrong function! Try again..." << std::endl;
+			Sleep(3000);
+			break;
 
+		}
+		system("cls");
+	}
 	loginFile.close();
 }
 
