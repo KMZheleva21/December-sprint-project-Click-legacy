@@ -3,12 +3,6 @@
 
 void possessionsMenu(std::string* username, bool* check)
 {
-	std::fstream possessionFile;
-	if (*check) {
-		possessionFile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
-	}
-
-	
 	while (true)
 	{
 		int action;
@@ -22,7 +16,7 @@ void possessionsMenu(std::string* username, bool* check)
 		switch (action)
 		{
 		case 1:
-			showPossessions(possessionFile);
+			showPossessions(username, check);
 			std::cout << std::endl << std::endl;
 			std::cout << "Enter '1' to close menu:" << std::endl;
 			std::cin >> action;
@@ -34,21 +28,23 @@ void possessionsMenu(std::string* username, bool* check)
 			system("cls");
 			break;
 		case 2:
-			addToPossessions(possessionFile, username);
+			addToPossessions(username, check);
 			system("cls");
 			break;
 		case 3:
-			transferPossessions(possessionFile);
+			transferPossessions(username, check);
 		default:
 			std::cout << "You entered a wrong action. Try again" << std::endl;
 			system("cls");
 		}
 	}
-	possessionFile.close();
 }
 
-void showPossessions(std::fstream& possessionFile) {
-	
+void showPossessions(std::string* username, bool* check) {
+	std::fstream possessionFile;
+	if (*check) {
+		possessionFile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
+	}
 	std::string line;
 	int lineCounter = 1;
 	while (!possessionFile.eof()) {
@@ -62,6 +58,7 @@ void showPossessions(std::fstream& possessionFile) {
 		std::cout << line << std::endl;
 		lineCounter++;
 	}
+	possessionFile.close();
 }
 
 void enterCardInformation() {
@@ -120,7 +117,11 @@ void enterE_WalletInformation() {
 	std::cout << "Successfully added" << std::endl;
 }
 
-void addToPossessions(std::fstream& possessionFile, std::string* username) {
+void addToPossessions(std::string* username, bool* check) {
+	std::fstream possessionFile;
+	if (*check) {
+		possessionFile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
+	}
 	std::string addPossessions;
 	std::string type;
 	while (true) {
@@ -151,6 +152,7 @@ void addToPossessions(std::fstream& possessionFile, std::string* username) {
 			{
 				possessionFile << tempHold[i] << std::endl;
 			}
+			possessionFile.close();
 		}
 		switch (stoi(type)){
 		case 1:
@@ -166,8 +168,12 @@ void addToPossessions(std::fstream& possessionFile, std::string* username) {
 	}
 }
 
-void transferPossessions(std::fstream& possessionFile)
+void transferPossessions(std::string* username, bool* check)
 {
+	std::fstream possessionFile;
+	if (*check) {
+		possessionFile.open("./files/" + *username + ".txt", std::ios::in | std::ios::out | std::ios::app);
+	}
 	system("cls");
 	std::fstream user_list;
 	user_list.open("./files/loginInfo.txt");
@@ -175,7 +181,7 @@ void transferPossessions(std::fstream& possessionFile)
 	std::string rec_username;
 	std::string type;
 	std::string addPossessions;
-	bool check = false;
+	bool check1 = false;
 	std::cout << "Enter recipient's username:" << std::endl << std::endl;
 	std::cin >> rec_username;
 	while (!user_list.eof())
@@ -183,13 +189,13 @@ void transferPossessions(std::fstream& possessionFile)
 		getline(user_list, line);
 		if (line.find(rec_username) != std::string::npos)
 		{
-			check = true;
+			check1 = true;
 			break;
 		}
 	}
-	while (check)
+	while (check1)
 	{
-		if (check)
+		if (check1)
 		{
 			std::cout << "Types of possessions you can transfer:" << std::endl;
 			std::cout << "[1] Money (in USD)" << std::endl;
@@ -232,7 +238,7 @@ void transferPossessions(std::fstream& possessionFile)
 		else {
 			std::cout << "No user with entered username. Please try again!" << std::endl << std::endl;
 			Sleep(3000);
-			transferPossessions(possessionFile);
+			transferPossessions(username, check);
 		}
 	}
 

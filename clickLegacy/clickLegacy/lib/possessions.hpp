@@ -2,11 +2,11 @@
 
 void possessionsMenu(std::string* username, bool* check);
 
-void showPossessions(std::fstream& possessionsFile);
+void showPossessions(std::string* username, bool* check);
 
-void addToPossessions(std::fstream& possessionFile, std::string* username);
+void addToPossessions(std::string* username, bool* check);
 
-void transferPossessions(std::fstream& possessionFile);
+void transferPossessions(std::string* username, bool* check);
 
 void enterCardInformation();
 
